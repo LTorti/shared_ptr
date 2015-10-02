@@ -1,0 +1,23 @@
+cmake_minimum_required (VERSION 2.8)
+project (SHARED_PTR)
+
+# Configuring cmake
+LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
+
+FIND_PACKAGE(CXX11 REQUIRED)
+IF(CXX11_FOUND)
+  SET(CMAKE_CXX_FLAGS "${CXX11_FLAGS} ${CMAKE_CXX_FLAGS}")
+ELSE()
+  MESSAGE(FATAL_ERROR "Please use a C++11 compliant compiler.")
+ENDIF()
+
+FIND_PACKAGE(aGrUM REQUIRED)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG")
+
+INCLUDE_DIRECTORIES(${AGRUM_INCLUDE_DIR})
+
+add_executable (shared_ptr shared_ptr.cpp)
+target_link_libraries(shared_ptr ${AGRUM_LIBRARIES})
+
